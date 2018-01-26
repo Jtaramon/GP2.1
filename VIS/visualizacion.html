@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Highcharts data from JSON Response</title>
+        <style>
+        body{
+            margin-top: 30px;
+            margin-left:40px;
+        }
+        </style>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>      
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript">
+        $(function () {
+                var processed_json = new Array(); 
+                var processed_jsons = new Array();   
+                $.getJSON('latin.json', function(data) {
+                    // Populate series
+                    for (i = 1; i < data.length; i++){
+                        processed_json.push([data[i].CountryName, data[i].cinco]);
+                        processed_jsons.push([data[i].CountryName,data[i].seis]);
+                    }
+                 
+                    // draw chart
+                    $('#container').highcharts({
+                    chart: {
+                        type: "column"
+                    },
+                    title: {
+                        text: "Indicadores del desarrollo mundial"
+                    },
+                    xAxis: {
+                        type: 'category',
+                        allowDecimals: false,
+                        title: {
+                            text: ""
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: "POBLACION"
+                        }
+                    },
+                    series: [{
+                        name: 'Año 2015',
+                        data: processed_json
+                    },{name: 'Año 2016',
+                        data: processed_jsons}]
+                }); 
+            });
+        });
+    </script>
+
+
+</head>
+<body>
+    <div id="container" style="height: 700px"></div>
+    
+</body>
+</html>
